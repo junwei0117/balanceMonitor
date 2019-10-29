@@ -1,0 +1,21 @@
+{
+  "name": "balancemonitor",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "BiiLabs Co., Ltd.",
+  "license": "MIT",
+  "scripts": {
+    "balanceMonitor": "ts-node ./index.ts"
+  },
+  "dependencies": {
+    "web3": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.3",
+    "@types/web3": "^1.0.20",
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  }
+}

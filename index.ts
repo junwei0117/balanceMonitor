@@ -22,11 +22,9 @@ const NTDContract = new web3.eth.Contract(abi, contractAddress);
 const calculateTPS = async () => {
   const currentBlock = await web3.eth.getBlock('latest');
   const transactionCount = currentBlock.transactions.length;
-  console.log(transactionCount);
   const previousBlock = await web3.eth.getBlock(currentBlock.parentHash);
   // @ts-ignore
   const timeTaken = currentBlock.timestamp - previousBlock.timestamp;
-  console.log(timeTaken);
   const tps = transactionCount / timeTaken;
   return tps;
 };

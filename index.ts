@@ -1,58 +1,110 @@
 import Web3 from 'web3';
 import {
-  quorumEndpoint,
+  node1QuorumEndpoint,
+  node2QuorumEndpoint,
+  node3QuorumEndpoint,
+  node4QuorumEndpoint,
   node1Address,
   node2Address,
   node3Address,
-  node4Address,
-  node5Address,
-  node6Address,
-  node7Address,
 } from './constant/nodes';
 import {
   abi,
-  contractAddress,
-} from './constant/NTDContract';
+  bank1Address,
+  bank2Address,
+  bank3Address,
+} from './constant/BankContract';
 
-const web3 = new Web3(quorumEndpoint);
+const initializeContractObject = (endpoint: string) => {
+  const web3 = new Web3(endpoint);
+  // @ts-ignore
+  const bank1Contract = new web3.eth.Contract(abi, bank1Address);
+  // @ts-ignore
+  const bank2Contract = new web3.eth.Contract(abi, bank2Address);
+  // @ts-ignore
+  const bank3Contract = new web3.eth.Contract(abi, bank3Address);
 
-// @ts-ignore
-const NTDContract = new web3.eth.Contract(abi, contractAddress);
+  return {bank1Contract, bank2Contract, bank3Contract};
+};
 
-const calculateTPS = async () => {
+const getQuorumTPS = async () => {
+  const web3 = new Web3(node4QuorumEndpoint);
   const currentBlock = await web3.eth.getBlock('latest');
+  console.log(`Block Height: ${currentBlock.number}`);
   const transactionCount = currentBlock.transactions.length;
   const previousBlock = await web3.eth.getBlock(currentBlock.parentHash);
   // @ts-ignore
   const timeTaken = currentBlock.timestamp - previousBlock.timestamp;
-  const tps = transactionCount / timeTaken;
-  return tps;
+  const TPS = transactionCount / timeTaken;
+  console.log(`TPS: ${TPS}\n`);
 };
 
-const getQuorumStatus = async () => {
-  const TPS = await calculateTPS();
-  console.log(`TPS: ${TPS}`);
+const getBalanceFromCBC = async () => {
+  console.log('CBC\' perspective:');
 
-  const node1Balance =  await NTDContract.methods.balanceOf(node1Address).call({from: node1Address});
-  console.log(`node1 Balance: ${node1Balance}`);
+  const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node4QuorumEndpoint);
 
-  const node2Balance =  await NTDContract.methods.balanceOf(node2Address).call({from: node2Address});
-  console.log(`node2 Balance: ${node2Balance}`);
+  const node1Balance =  await bank1Contract.methods.balance().call({from: node1Address});
+  console.log(`Bank1 Balance: ${node1Balance}`);
 
-  const node3Balance =  await NTDContract.methods.balanceOf(node3Address).call({from: node3Address});
-  console.log(`node3 Balance: ${node3Balance}`);
+  const node2Balance =  await bank2Contract.methods.balance().call({from: node2Address});
+  console.log(`Bank2 Balance: ${node2Balance}`);
 
-  const node4Balance =  await NTDContract.methods.balanceOf(node4Address).call({from: node4Address});
-  console.log(`node4 Balance: ${node4Balance}`);
-
-  const node5Balance =  await NTDContract.methods.balanceOf(node5Address).call({from: node5Address});
-  console.log(`node5 Balance: ${node5Balance}`);
-
-  const node6Balance =  await NTDContract.methods.balanceOf(node6Address).call({from: node6Address});
-  console.log(`node6 Balance: ${node6Balance}`);
-
-  const node7Balance =  await NTDContract.methods.balanceOf(node7Address).call({from: node7Address});
-  console.log(`node7 Balance: ${node7Balance}`);
+  const node3Balance =  await bank3Contract.methods.balance().call({from: node3Address});
+  console.log(`Bank3 Balance: ${node3Balance}\n`);
 };
 
-getQuorumStatus();
+const getBalanceFromBank1 = async () => {
+  console.log('Bank1\' perspective:');
+
+  const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node1QuorumEndpoint);
+
+  const node1Balance =  await bank1Contract.methods.balance().call({from: node1Address});
+  console.log(`Bank1 Balance: ${node1Balance}`);
+
+  const node2Balance =  await bank2Contract.methods.balance().call({from: node2Address});
+  console.log(`Bank2 Balance: ${node2Balance}`);
+
+  const node3Balance =  await bank3Contract.methods.balance().call({from: node3Address});
+  console.log(`Bank3 Balance: ${node3Balance}\n`);
+};
+
+const getBalanceFromBank2 = async () => {
+  console.log('Bank2\' perspective:');
+
+  const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node2QuorumEndpoint);
+
+  const node1Balance =  await bank1Contract.methods.balance().call({from: node1Address});
+  console.log(`Bank1 Balance: ${node1Balance}`);
+
+  const node2Balance =  await bank2Contract.methods.balance().call({from: node2Address});
+  console.log(`Bank2 Balance: ${node2Balance}`);
+
+  const node3Balance =  await bank3Contract.methods.balance().call({from: node3Address});
+  console.log(`Bank3 Balance: ${node3Balance}\n`);
+};
+
+const getBalanceFromBank3 = async () => {
+  console.log('Bank3\' perspective:');
+
+  const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node3QuorumEndpoint);
+
+  const node1Balance =  await bank1Contract.methods.balance().call({from: node1Address});
+  console.log(`Bank1 Balance: ${node1Balance}`);
+
+  const node2Balance =  await bank2Contract.methods.balance().call({from: node2Address});
+  console.log(`Bank2 Balance: ${node2Balance}`);
+
+  const node3Balance =  await bank3Contract.methods.balance().call({from: node3Address});
+  console.log(`Bank3 Balance: ${node3Balance}\n`);
+};
+
+const start = async () => {
+  await getQuorumTPS();
+  await getBalanceFromCBC();
+  await getBalanceFromBank1();
+  await getBalanceFromBank2();
+  await getBalanceFromBank3();
+};
+
+start();

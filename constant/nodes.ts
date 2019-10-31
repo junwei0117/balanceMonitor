@@ -6,4 +6,7 @@ export const node5Address = '0638e1574728b6d862dd5d3a3e0942c3be47d996';
 export const node6Address = 'ae9bc6cd5145e67fbd1887a5145271fd182f0ee7';
 export const node7Address = 'cc71c7546429a13796cf1bf9228bff213e7ae9cc';
 
-export const quorumEndpoint = 'http://localhost:22000';
+export const node1QuorumEndpoint = 'http://node9.puyuma.org:22000';
+export const node2QuorumEndpoint = 'http://node9.puyuma.org:22001';
+export const node3QuorumEndpoint = 'http://node9.puyuma.org:22002';
+export const node4QuorumEndpoint = 'http://node9.puyuma.org:22003';

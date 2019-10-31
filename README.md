@@ -11,5 +11,5 @@ $ yarn install
 ### Start
 
 ```
-$ yarn balanceMonitor
+$ yarn start
 ```

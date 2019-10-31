@@ -40,7 +40,7 @@ const getQuorumTPS = async () => {
 };
 
 const getBalanceFromCBC = async () => {
-  console.log('CBC\' perspective:');
+  console.log('CBC\'s perspective:');
 
   const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node4QuorumEndpoint);
 
@@ -55,7 +55,7 @@ const getBalanceFromCBC = async () => {
 };
 
 const getBalanceFromBank1 = async () => {
-  console.log('Bank1\' perspective:');
+  console.log('Bank1\'s perspective:');
 
   const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node1QuorumEndpoint);
 
@@ -70,7 +70,7 @@ const getBalanceFromBank1 = async () => {
 };
 
 const getBalanceFromBank2 = async () => {
-  console.log('Bank2\' perspective:');
+  console.log('Bank2\'s perspective:');
 
   const {bank1Contract, bank2Contract, bank3Contract} = initializeContractObject(node2QuorumEndpoint);
 

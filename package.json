@@ -5,7 +5,7 @@
   "author": "BiiLabs Co., Ltd.",
   "license": "MIT",
   "scripts": {
-    "balanceMonitor": "ts-node ./index.ts"
+    "start": "ts-node ./index.ts"
   },
   "dependencies": {
     "web3": "^1.2.1"
